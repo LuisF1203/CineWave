@@ -65,6 +65,10 @@ const logProfile = (name,img) => {
 
 async function userToHtml(user) {
     const profileKeys = Object.keys(user.profiles || {});
+    const buttonContainer = document.querySelector('.add-profile-link');
+    if (profileKeys.length >= 4) {
+        buttonContainer.style.display = 'none';
+    }
 
     const profileHtmlArray = profileKeys.map((profileKey) => {
         const profile = user.profiles[profileKey];
