@@ -1,0 +1,20 @@
+[
+      {
+        "title": "Stranger Things",
+        "creator": "The Duffer Brothers",
+        "year": 2016,
+        "genre": "Drama, Fantasy, Horror"
+      },
+      {
+        "title": "Game of Thrones",
+        "creators": "David Benioff, D.B. Weiss",
+        "year": 2011,
+        "genre": "Action, Adventure, Drama"
+      },
+      {
+        "title": "Breaking Bad",
+        "creator": "Vince Gilligan",
+        "year": 2008,
+        "genre": "Crime, Drama, Thriller"
+      }
+]

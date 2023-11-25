@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/home.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/movie.css">
+</head>
+<body>
+    <nav id="main-nav"></nav>
+    <main>
+        <div class="main-movie" onclick="">
+            <img class="main-movie-img" src="../assets/backgorund.jpg" alt="">
+            <div class="main-gradient-movie">
+
+            </div>
+
+            <div class="main-play">
+                <div class="main-top">
+                    <img src="../assets/top-10.png" class="top-10-icon" alt="">
+                    <p>#2 in nigeria</p>
+                </div>
+                <div class="play-info">
+                    <a href="#"><img src="../assets/MyList.png" alt=""></a>
+                    <button><img src="../assets/play.png" alt=""></button>
+                    <button><img src="../assets/Info.png" alt=""></button>
+                </div>
+            </div>
+        </div>
+        <div class="continue-watiching">
+            <h2>Continuar viendo</h2>
+            <div id="continue-watching-list" class="list-movies">
+                <p>Ve una pelicula o serie</p>
+            </div>
+        </div>
+        
+        <div id="myList" class="my-list">
+            <h2>My list</h2>
+            <div id="myListContainer" class="my-list-movies">
+                <button><img src="../assets/backgorund.jpg" alt=""></button>
+                <a href="#"><img src="../assets/backgorund.jpg" alt=""></a>
+                <a href="#"><img src="../assets/backgorund.jpg" alt=""></a>
+                <a href="#"><img src="../assets/backgorund.jpg" alt=""></a>
+            </div>
+        </div>
+
+        
+        <div class="movies" >
+            <h2>Drama</h2>
+            <div id="dramaMovieList">
+            
+            </div>
+        </div>
+
+        <div class="movies" >
+            <h2>Romance</h2>
+            <div id="romanceMovieList">
+            
+            </div>
+        </div>
+
+        <div class="movies" >
+            <h2>Action</h2>
+            <div id="actionMovieList">
+            
+            </div>
+        </div>
+
+
+        <div class="movies" >
+            <h2>Everything</h2>
+            <div id="movieList">
+            
+            </div>
+        </div>
+
+    </main>
+
+
+    <div id="detallePelicula" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100;">
+        <!-- Aquí se mostrará el video -->
+    </div>
+
+
+    <script src="../components/movie.js"></script>
+    <script src="../components/navbar.js"></script>
+
+
+    <script src="../controllers/mediaContent.js"></script>
+    <script src="../controllers/utils.js"></script>
+    <script src="../controllers/ajax_handler.js"></script>
+    <script src="../controllers/movies_utils.js"></script>
+
+
+
+    <script src="../controllers/utils.js"></script>
+    <script src="../controllers/user_utils.js"></script>
+
+    <script src="../components/loader.js"></script>
+
+</body>
+</html>

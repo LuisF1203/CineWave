@@ -1,0 +1,27 @@
+
+footer{
+    background-color: rgba(0, 0, 0, 0.699); /* Color de fondo negro */
+    color: #fff; /* Color de texto blanco */
+    margin-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 2%;
+    
+}
+
+.footer{
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer a {
+    color: rgba(255, 255, 255, 0.500);
+    text-decoration: none;
+    padding: 10px;
+}
+.footer a:hover{
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+}

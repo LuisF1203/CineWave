@@ -1,0 +1,137 @@
+.movie-container{
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; 
+    background-color: black;
+}
+
+.open-movie {
+    animation: openMovie 0.5s;
+    overflow: hidden;
+    transform-origin: middle;
+    transform: scaleY(0);
+}
+.close-movie{
+    transition: 0.5s;
+    transform: scaleY(0);
+    z-index: 30;
+}
+.goBackdBtn{
+    background: none;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    top: 4%;
+    left: 4%;
+    position: absolute;
+}
+.goBackdBtn img{
+    width: 25px;
+}
+
+@keyframes openMovie {
+    0% {
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+.open {
+    transform: scaleY(1) !important;
+}
+
+
+.movie-container video{
+    width: 100%; 
+    height: 100%;
+}
+.movie-container .controls{
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; 
+    background-color: rgba(0, 0, 0, 0.781);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    z-index: 20;
+}
+.bar{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 5%;
+}
+.bar .progress{
+    display: flex;
+
+}
+.bar input{
+    margin: auto;
+    width: 90%;
+}
+.bar .info{
+    display: flex;
+    justify-content: space-between; 
+    color: white;
+    width: 90%;
+    margin: auto;
+}
+.bar .info .settings{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.bar .info input {
+    width: 10%;
+    transform: rotate(-90deg);
+    position: absolute;
+    right: 1.5%;
+    bottom: 140px;
+    background-color: red;
+    outline: red;
+}
+.bar .info button {
+    width: 40px;
+    background:none;
+    outline: none;
+    border: none;
+
+}
+.movie-title{
+    color: white;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+.movie-container .controls ul{
+    display: flex; 
+    list-style: none;
+    justify-content: space-evenly;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    
+}
+.movie-container .controls ul li button{
+    color: white;
+    outline: none;
+    border: none;
+    background: none;
+    opacity: 50%;
+    transition: 0.2s;
+}
+.movie-container .controls ul li button:hover{
+    opacity: 100%;
+}
+.movie-container .controls ul li button img{
+    width: 40px;
+}
+
+.hide-cursor {
+    cursor: none;
+}

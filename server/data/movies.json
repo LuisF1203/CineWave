@@ -1,0 +1,35 @@
+[
+    {
+      "title": "The Secret in Their Eyes",
+      "director": "Juan José Campanella",
+      "year": 2009,
+      "genre": ["Drama", "Crime", "Mystery"],
+      "imageURL": "https://th.bing.com/th/id/R.c913b79e629cb73ca3c9a0532574f714?rik=fmn9qRo%2biy5uvg&pid=ImgRaw&r=0",
+      "video":"https://drive.google.com/uc?export=download&id=1Orxfqv2N2vo8_GG_okIc_QxYpAr0ICBe"
+    },
+    {
+      "title": "Inception",
+      "director": "Christopher Nolan",
+      "year": 2010,
+      "genre": ["Action", "Adventure", "Science Fiction"],
+      "imageURL": "https://th.bing.com/th/id/R.dd9827fbb0199cd20694739d54c346d8?rik=5JsQjhudqNqO9w&pid=ImgRaw&r=0",
+      "video":"https://drive.google.com/uc?export=download&id=1s7VDpiNilACzSjB6LEfLrRPthYwfHzWa"
+    },
+    {
+      "title": "La La Land",
+      "director": "Damien Chazelle",
+      "year": 2016,
+      "genre": ["Musical", "Drama", "Romance"],
+      "imageURL": "https://th.bing.com/th/id/R.61e50b048f87ef13d0718c50e5637e63?rik=B5plTZNxOYCPiA&pid=ImgRaw&r=0",
+      "video":"https://drive.google.com/uc?export=download&id=1HJTVqUPAXImXJLvNNMDWPbRm-YFZxp3d"
+    },
+    {
+      "title": "The Last of Us",
+      "director": "Kantemir Balagov",
+      "year": 2023,
+      "genre": ["Action", "Adventure", "Drama"],
+      "imageURL": "https://th.bing.com/th/id/R.08a8959cb71456abda26ff89a2812f26?rik=lDHKLqMy%2fMWY1Q&pid=ImgRaw&r=0",
+      "video": "https://drive.google.com/uc?export=download&id=1yLUNcpeKVeVTMhvH67435GTylKRp1odC"
+    }
+  ]
+  

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/createProfile.css">
+
+    <title>CINEWAVE STUDIO</title>
+</head>
+<body>
+    <div class="container">
+        <nav id="main-nav"></nav>
+        <form onsubmit="createProfile(event)" class="main">
+            <div class="user">
+                <input required name="username" type="text" id="username" maxlength="12" placeholder="Username">
+            </div>
+
+            <div class="imageProfile">
+                <label for="image" class="image">
+                    <img id="userImg" src="../assets/add-profile.svg" alt="">
+                    <input required name="userImg" onchange="newUserImg(this)" style="display: none;" type="file" id="image" accept="image/*"></input>
+                </label>
+            </div>
+            <div class="button-options">
+                <label class="switch">
+                    <input name="parental" type="checkbox">
+                    <span class="slider"></span>
+                  </label>
+                  <p>Control Parental</p>
+            </div>
+            <div class="create">
+                <button class="button-create">CREATE</button>
+            </div>
+
+        </form>
+
+
+
+
+
+    </div>
+
+    <script>
+         function newUserImg(input) {
+            const userImg = document.getElementById("userImg");
+
+            // Check if a file is selected
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // Update the src attribute of the img element with the selected image
+                    userImg.src = e.target.result;
+                };
+
+                // Read the selected image file as a data URL
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
+    <script src="/components/navbar.js"></script>
+    <script src="../controllers/user_utils.js"></script>
+</body>
+</html>

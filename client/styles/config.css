@@ -1,0 +1,161 @@
+* {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background-color: rgba(0, 0, 0);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    overflow: hidden;
+}
+
+.profiles {
+    margin: auto;
+    height: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.add-profile-link img {
+    border: 2px solid white;
+}
+
+.profile-n {
+    text-align: center;
+    transition: 0.2s;
+    opacity: 70%;
+}
+
+.profile-n img {
+    width: 190px;
+    height: 190px;
+    margin: 15px;
+    border-radius: 10px;
+    
+}
+
+.profile-n:hover {
+    transform: scale(1.3);
+    opacity: 100%;
+}
+
+.profile-n button {
+    text-decoration: none;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.profile-n p {
+    margin: 0;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.settings {
+    margin: 20px;
+    text-align: center;
+    flex-direction: column;
+}
+
+.button-options button {
+    background: black;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: x-large;
+    padding: 15px;
+    margin: 30px;
+    transition: background-color 0.3s ease, border-radius 0.3s ease, color 0.3s ease;
+}
+
+.button-options p {
+    font-size: x-large;
+    color: white;
+}
+
+.button-options button:hover {
+    background-color: rgb(40, 36, 87);
+    border-radius: 50px;
+    color: white;
+}
+
+.last-button button {
+    background: black;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: x-large;
+    padding: 15px;
+    margin: 30px;
+    transition: background-color 0.3s ease, border-radius 0.3s ease, color 0.3s ease;
+}
+
+.last-button button:hover {
+    background-color: rgb(63, 16, 16);
+    border-radius: 50px;
+    color: white;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: background-color 0.4s ease, border-radius 0.4s ease;
+    border-radius: 34px;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: transform 0.4s ease;
+    border-radius: 50%;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}

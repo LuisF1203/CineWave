@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINEWAVE STUDIOS</title>
+    <link rel="stylesheet" href="../styles/config.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
+</head>
+<body>
+    <div class="container">
+        <nav id="main-nav"></nav>
+
+        <div class="main">
+            <div class="profiles">
+                <div class="profiles" id="myProfiles">
+
+                </div>
+                <!-- <div class="profile-n" >
+                    <button onclick="goHome()">
+                        <img src="../assets/user1.jpeg" alt="">
+                        <p>User1</p>
+                    </button>
+                </div>
+                <div class="profile-n">
+                    <button onclick="goHome()">
+                        <img src="../assets/user1.jpeg" alt="">
+                        <p>User2</p>
+                    </button>
+                </div>
+                <div class="profile-n">
+                    <button onclick="goHome()">
+                        <img src="../assets/user1.jpeg" alt="">
+                        <p>User3</p>
+                    </button>
+                </div>
+                <div class="profile-n">
+                    <button onclick="goHome()">
+                        <img src="../assets/user1.jpeg" alt="">
+                        <p>User4</p>
+                    </button>
+                </div> -->
+                <div class="profile-n ">
+                    <button class="add-profile-link" onclick="addProfile()">
+                        <img src="../assets/add-profile.svg" alt="">
+                        <p>add profile</p>
+                    </button>
+                </div>
+            </div>
+            <button onclick="logOut()" id="logoutButton" style="position: fixed; bottom: 10%; background-color: red; color: white; border: none; outline: none; padding: 10px; border-radius: 0.5rem; cursor: pointer;">
+                <strong>CERRAR SESION</strong>
+            </button>
+        </div>
+    </div>
+
+    <script src="../components/navbar.js"></script>
+    <script src="../controllers/ajax_handler.js"></script>
+    <script src="../controllers/utils.js"></script>
+    <script src="../controllers/user_utils.js"></script>
+    <script src="links.js"></script>
+    <script src="../components/loader.js"></script>
+
+</body>
+</html>
