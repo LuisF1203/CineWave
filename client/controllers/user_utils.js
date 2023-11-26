@@ -67,6 +67,10 @@ async function userToHtml(user) {
     if (profileKeys.length >= 4) {
         buttonContainer.style.display = 'none';
     }
+    //console.log(profileKeys.length)
+    //alert(profileKeys.length)
+    //console.log(profileKeys)
+    //console.log(user)
 
     const profileHtmlArray = profileKeys.map((profileKey) => {
         const profile = user.profiles[profileKey];
@@ -85,21 +89,24 @@ async function userToHtml(user) {
 }
 
 
-function renderUsers() {
-    usersToHtml().then((userHtmlArray) => {
-        userContainer.innerHTML = userHtmlArray.join('');
+function renderProfiles() {
+    profilesToHtml().then((userHtml) => { // userHtml en lugar de userHtmlArray, ya que parece que solo hay un usuario
+        userContainer.innerHTML = userHtml; // Ya no necesitas join, ya que solo hay un elemento
     });
 }
 
-async function usersToHtml() {
-    const users = await loadUser(usersURL);
-    const userHtmlArray = users.map(async (user) => {
-        const html = await userToHtml(user);
-        return html;
-    });
-
-    return Promise.all(userHtmlArray);
+async function profilesToHtml() {
+    // Aquí asumo que solo estás cargando un perfil a la vez desde sessionStorage
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    if (user) {
+        return await userToHtml(user); // Devuelve directamente el HTML del usuario
+    } else {
+        // Manejar el caso en que no hay un usuario almacenado
+        console.log("No user found in sessionStorage.");
+        return '';
+    }
 }
+
 
 async function loadUserInfo() {
     const users = await loadUser(usersURL);
@@ -158,7 +165,11 @@ async function createProfile(event) {
         console.log(response)
         if (response.ok) {
             alert('Perfil creado con éxito.');
-            window.location.href="/client/views/profiles.html"
+            loadUserInfo().then(()=>{
+                window.location.href="/client/views/profiles.html"
+            })
+
+            
         } else {
 
             alert('Error al crear el perfil.');
@@ -204,7 +215,7 @@ async function deleteProfile(event) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    renderUsers();
+    renderProfiles();
     loadUserInfo();
     onUser();
 });
