@@ -92,6 +92,25 @@ app.get('/api/user', async (req, res) => {
     }
 });
 
+app.post('/api/user', async (req, res) => {
+  try {
+      let newUser = req.body;
+
+      // Crea una instancia del modelo User con los datos proporcionados
+      const user = new UserModel(newUser);
+
+      // Guarda el nuevo usuario en la base de datos
+      await user.save();
+
+      // Responde con el usuario recién creado
+      res.status(201).json(user);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al agregar un nuevo usuario' });
+  }
+});
+
+
 //**POSTEAR un perfil**//
 app.post('/api/users/:email/profiles', async (req, res) => {
   try {
