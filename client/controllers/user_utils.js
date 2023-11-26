@@ -3,8 +3,6 @@ const userContainer = document.getElementById('myProfiles');
 
 
 
-
-
 async function logIn(e) {
     e.preventDefault();
     const email = e.target.email.value;
@@ -106,6 +104,7 @@ async function usersToHtml() {
 async function loadUserInfo() {
     const users = await loadUser(usersURL);
     console.log(users)
+
 }
 
 function createProfile(el) {
@@ -147,6 +146,47 @@ function onUser() {
             console.log("no hay un usuario con sesión activa ", user)
             window.open("/client/views/","_self")
         }
+    }
+}
+
+async function createProfile(event) {
+    event.preventDefault();
+    const username = event.target.username.value;
+    const userImg = event.target.userImg.files[0];
+    const blobUrl = URL.createObjectURL(userImg);
+    const userEmail = JSON.parse(sessionStorage.getItem('user'))._email;
+    console.log(userEmail)
+
+    if (!username || !userImg) {
+        alert('Username and image are required.');
+        return;
+    }
+
+    
+    try {
+        // Hacer una solicitud para agregar el nuevo perfil
+        const response = await fetch(apiURL + 'users/'+`${userEmail}/` + 'profiles/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                profileId: username,
+                _imagen: blobUrl,
+                // Agrega otros campos según sea necesario
+            }),
+        });
+        console.log(response)
+        if (response.ok) {
+            alert('Perfil creado con éxito.');
+            window.location.href="/client/views/profiles.html"
+        } else {
+
+            alert('Error al crear el perfil.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error de conexión con el servidor.');
     }
 }
 
