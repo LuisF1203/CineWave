@@ -107,27 +107,6 @@ async function loadUserInfo() {
 
 }
 
-function createProfile(el) {
-    el.preventDefault();
-
-    const username = el.target.username.value;
-    const userImg = el.target.userImg.files[0];
-    const parentalControl = el.target.parental.checked;
-
-    if (!username || !userImg) {
-        console.error('Username and image are required.');
-        return;
-    }
-
-    // Crear una URL Blob para la imagen
-    const blobUrl = URL.createObjectURL(userImg);
-
-    // Resto del código de la función...
-    console.log('Username:', username);
-    console.log('User Image:', blobUrl);
-    console.log('Parental Control:', parentalControl);
-}
-
 
 
 function onUser() {
@@ -187,6 +166,36 @@ async function createProfile(event) {
     } catch (error) {
         console.error('Error:', error);
         alert('Error de conexión con el servidor.');
+    }
+}
+
+
+// Define la función para eliminar un perfil
+async function deleteProfile(event) {
+    event.preventDefault();
+    const email = JSON.parse(sessionStorage.getItem('user'))._email;
+    const profileId =  JSON.parse(localStorage.getItem('profile')).id    
+    console.log(email)
+    console.log(profileId)
+    const deleteProfileURL = `${apiURL}users/${email}/profiles/${profileId}`;
+    try {
+
+        // Hace la solicitud DELETE para eliminar el perfil
+        const response = await fetch(deleteProfileURL, {
+            method: 'DELETE',
+        });
+
+        // Verifica si la solicitud fue exitosa (código de estado 204)
+        if (response.ok) {
+            console.log('Perfil eliminado con éxito.');
+            localStorage.removeItem('profile');
+            window.location.href="/client/views/profiles.html"
+        } else {
+            console.log('Error al eliminar el perfil.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        console.log('Error al conectarse con el servidor.');
     }
 }
 
