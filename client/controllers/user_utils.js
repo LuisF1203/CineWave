@@ -184,12 +184,24 @@ async function createProfile(event) {
 // Define la función para eliminar un perfil
 async function deleteProfile(event) {
     event.preventDefault();
-    const email = JSON.parse(sessionStorage.getItem('user'))._email;
-    const profileId =  JSON.parse(localStorage.getItem('profile')).id    
-    console.log(email)
-    console.log(profileId)
-    const deleteProfileURL = `${apiURL}users/${email}/profiles/${profileId}`;
+
     try {
+        // Obtén el email del usuario del sessionStorage
+        const email = JSON.parse(sessionStorage.getItem('user'))._email;
+
+        // Obtén el profileId del localStorage
+        const profileId = JSON.parse(localStorage.getItem('profile')).id;
+
+        // Obtén los perfiles del sessionStorage
+        const profiles = JSON.parse(sessionStorage.getItem('profileInfo'));
+
+        // Verifica si el profileId existe en los perfiles antes de hacer la solicitud DELETE
+        if (!profiles.hasOwnProperty(profileId)) {
+            console.log('El perfil que intentas eliminar no existe en los perfiles.');
+            return;
+        }
+
+        const deleteProfileURL = `${apiURL}users/${email}/profiles/${profileId}`;
 
         // Hace la solicitud DELETE para eliminar el perfil
         const response = await fetch(deleteProfileURL, {
@@ -199,8 +211,23 @@ async function deleteProfile(event) {
         // Verifica si la solicitud fue exitosa (código de estado 204)
         if (response.ok) {
             console.log('Perfil eliminado con éxito.');
+
+            // Elimina el perfil del objeto profiles
+            delete profiles[profileId];
+
+            // Actualiza el sessionStorage con los perfiles actualizados
+            sessionStorage.setItem('profileInfo', JSON.stringify(profiles));
+
+            // Elimina el perfil del objeto user.profiles
+            const user = JSON.parse(sessionStorage.getItem('user'));
+            if (user && user.profiles) {
+                delete user.profiles[profileId];
+                sessionStorage.setItem('user', JSON.stringify(user));
+            }
+
             localStorage.removeItem('profile');
-            window.location.href="/client/views/profiles.html"
+            alert('Perfil borrado exitosamente.');
+            window.location.href = "/client/views/profiles.html";
         } else {
             console.log('Error al eliminar el perfil.');
         }
