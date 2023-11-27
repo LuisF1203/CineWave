@@ -141,17 +141,15 @@ async function createProfile(event) {
     const userImg = event.target.userImg.files[0];
     const blobUrl = URL.createObjectURL(userImg);
     const userEmail = JSON.parse(sessionStorage.getItem('user'))._email;
-    console.log(userEmail)
 
     if (!username || !userImg) {
         alert('Username and image are required.');
         return;
     }
 
-    
     try {
         // Hacer una solicitud para agregar el nuevo perfil
-        const response = await fetch(apiURL + 'users/'+`${userEmail}/` + 'profiles/', {
+        const response = await fetch(apiURL + 'users/' + `${userEmail}/` + 'profiles/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -162,16 +160,29 @@ async function createProfile(event) {
                 // Agrega otros campos según sea necesario
             }),
         });
-        console.log(response)
+
+        console.log(response);
+
         if (response.ok) {
+            // Obtener el objeto 'profiles' del usuario en sessionStorage
+            const user = JSON.parse(sessionStorage.getItem('user')) || {};
+            const profiles = user.profiles || {};
+
+            // Agregar el nuevo perfil al objeto 'profiles'
+            profiles[username] = {
+                _imagen: blobUrl,
+                // Agrega otros campos según sea necesario
+            };
+
+            // Actualizar el objeto 'profiles' en el usuario en sessionStorage
+            user.profiles = profiles;
+            sessionStorage.setItem('user', JSON.stringify(user));
+
             alert('Perfil creado con éxito.');
-            loadUserInfo().then(()=>{
-                window.location.href="/client/views/profiles.html"
-            })
-
-            
+            loadUserInfo().then(() => {
+                window.location.href = "/client/views/profiles.html";
+            });
         } else {
-
             alert('Error al crear el perfil.');
         }
     } catch (error) {
