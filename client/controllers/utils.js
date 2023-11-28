@@ -6,6 +6,7 @@ const moviesURL = apiURL + 'movies/';
 const seriesURL = apiURL + 'series/';
 const usersURL = apiURL + 'user/';
 const loginURL = apiURL + 'login/';
+const myListURL = apiURL + 'myList/';
 
 
 
@@ -18,6 +19,10 @@ function initMyList() {
 
 function readMyList() {
     let myList = JSON.parse(sessionStorage.getItem('myList'));
+
+
+
+
     if (myList === undefined) {
         myList = [];
     }

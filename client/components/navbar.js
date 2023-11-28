@@ -17,8 +17,9 @@ function MiComponente(elementoPadre) {
   
       // Actualiza el contenido de la barra de búsqueda con los resultados
       const searchImgs = this.elementoHijo.querySelector(".search-imgs");
+      
       searchImgs.innerHTML = filteredMovies.map(movie => `
-        <a href="#" class="search-img-poster">
+        <a onclick="mostrarDetallePelicula(${JSON.stringify(movie).replace(/\"/g,"&quot;")})" href="#" class="search-img-poster">
           <img src="${movie.imageURL}" alt="${movie.title}">
           <p>${movie.title}</p>
         </a>

@@ -92,6 +92,13 @@ app.get('/api/user', async (req, res) => {
     }
 });
 
+
+
+
+
+
+
+
 app.post('/api/user', async (req, res) => {
   try {
     let newUser = req.body;
@@ -234,6 +241,38 @@ app.get('/api/users/:email', async (req, res) => {
       res.status(500).json({ error: 'Error al obtener información del usuario' });
     }
   });
+
+
+
+
+
+
+
+
+  //**GET de perfiles de un usuario por email**//
+  app.get('/api/users/:email/:profile/myList', async (req, res) => {
+    try {
+      let email = req.params.email;
+      let profile = req.params.profile;
+
+      // Buscar usuario por correo electrónico en la base de datos
+      const user = await UserModel.findOne({ _email: email });
+      const prof = await UserModel.findOne({ profile: profile });
+      if (!user && !prof) {
+        res.status(404).json({ error: 'Usuario/Perfil no encontrado' });
+        return;
+      }
+      console.log(user.profiles[prof]._myList)
+      res.json(user.profiles[prof]._myList);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Error al obtener información del usuario' });
+    }
+  });
+
+
+
+  
 
 
 

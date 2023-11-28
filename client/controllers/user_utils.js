@@ -135,61 +135,148 @@ function onUser() {
     // }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 async function createProfile(event) {
     event.preventDefault();
     const username = event.target.username.value;
     const userImg = event.target.userImg.files[0];
-    const blobUrl = URL.createObjectURL(userImg);
     const userEmail = JSON.parse(sessionStorage.getItem('user'))._email;
 
-    if (!username || !userImg) {
-        alert('Username and image are required.');
-        return;
-    }
+    console.log(username);
 
-    try {
-        // Hacer una solicitud para agregar el nuevo perfil
-        const response = await fetch(apiURL + 'users/' + `${userEmail}/` + 'profiles/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                profileId: username,
-                _imagen: blobUrl,
-                // Agrega otros campos según sea necesario
-            }),
-        });
+    // Verifica si se seleccionó una imagen
+    if (userImg) {
+        const reader = new FileReader();
 
-        console.log(response);
+        reader.onload = async function (event) {
+            try {
+                // El contenido de result es la representación base64 de la imagen
+                const base64Image = event.target.result;
 
-        if (response.ok) {
-            // Obtener el objeto 'profiles' del usuario en sessionStorage
-            const user = JSON.parse(sessionStorage.getItem('user')) || {};
-            const profiles = user.profiles || {};
+                // Función para redimensionar la imagen
+                function resizeImage(base64, maxWidth, maxHeight) {
+                    return new Promise((resolve, reject) => {
+                        const img = new Image();
 
-            // Agregar el nuevo perfil al objeto 'profiles'
-            profiles[username] = {
-                _imagen: blobUrl,
-                // Agrega otros campos según sea necesario
-            };
+                        img.onload = function () {
+                            let width = img.width;
+                            let height = img.height;
 
-            // Actualizar el objeto 'profiles' en el usuario en sessionStorage
-            user.profiles = profiles;
-            sessionStorage.setItem('user', JSON.stringify(user));
+                            // Verificar si la imagen necesita ser redimensionada
+                            if (width > maxWidth || height > maxHeight) {
+                                // Calcular nuevos tamaños proporcionales
+                                const ratio = Math.min(maxWidth / width, maxHeight / height);
+                                width *= ratio;
+                                height *= ratio;
+                            }
 
-            alert('Perfil creado con éxito.');
-            loadUserInfo().then(() => {
-                window.location.href = "/client/views/profiles.html";
-            });
-        } else {
-            alert('Error al crear el perfil.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error de conexión con el servidor.');
+                            // Crear un elemento canvas para la redimensión
+                            const canvas = document.createElement('canvas');
+                            canvas.width = width;
+                            canvas.height = height;
+
+                            // Dibujar la imagen en el canvas
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+
+                            // Obtener la representación base64 de la imagen redimensionada
+                            const resizedBase64 = canvas.toDataURL('image/jpeg');
+
+                            // Resolver la promesa con la imagen redimensionada
+                            resolve(resizedBase64);
+                        };
+
+                        img.onerror = function (error) {
+                            reject(error);
+                        };
+
+                        // Asignar la representación base64 a la imagen
+                        img.src = base64;
+                    });
+                }
+
+                // Redimensionar la imagen antes de enviarla al servidor
+                const resizedImage = await resizeImage(base64Image, 300, 300);
+
+                // Hacer una solicitud para agregar el nuevo perfil con la imagen redimensionada
+                const response = await fetch(apiURL + 'users/' + `${userEmail}/` + 'profiles/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        profileId: username,
+                        _imagen: resizedImage,
+                        // Agrega otros campos según sea necesario
+                    }),
+                });
+
+                console.log(response);
+
+                if (response.ok) {
+                    // Obtener el objeto 'profiles' del usuario en sessionStorage
+                    const user = JSON.parse(sessionStorage.getItem('user')) || {};
+                    const profiles = user.profiles || {};
+
+                    // Agregar el nuevo perfil al objeto 'profiles'
+                    profiles[username] = {
+                        _imagen: base64Image,
+                        // Agrega otros campos según sea necesario
+                    };
+
+                    // Actualizar el objeto 'profiles' en el usuario en sessionStorage
+                    user.profiles = profiles;
+                    sessionStorage.setItem('user', JSON.stringify(user));
+
+                    alert('Perfil creado con éxito.');
+                    loadUserInfo().then(() => {
+                        window.location.href = "/client/views/profiles.html";
+                    });
+                } else {
+                    alert('Error al crear el perfil.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión con el servidor.');
+            }
+        };
+
+        // Lee la imagen como una cadena base64
+        reader.readAsDataURL(userImg);
+    } else {
+        console.log('No se seleccionó ninguna imagen.');
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Define la función para eliminar un perfil
@@ -270,6 +357,7 @@ async function SignUp(event) {
                 _nombre: nombre,
                 _email: email,
                 _password: password,
+                profiles:{}
             }),
         });
 
@@ -280,7 +368,7 @@ async function SignUp(event) {
             console.log(responseData)
             sessionStorage.setItem('user',JSON.stringify(responseData))
             alert('Usuario creado con éxito.');
-            window.location.href='home.html'
+            window.location.href='profiles.html'
             // Puedes realizar acciones adicionales aquí si es necesario
         } else {
             alert('Error al crear el usuario.');
