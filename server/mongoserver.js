@@ -94,19 +94,27 @@ app.get('/api/user', async (req, res) => {
 
 app.post('/api/user', async (req, res) => {
   try {
-      let newUser = req.body;
+    let newUser = req.body;
 
-      // Crea una instancia del modelo User con los datos proporcionados
-      const user = new UserModel(newUser);
+    // Verifica si el correo electrónico ya existe en la base de datos
+    const existingUser = await UserModel.findOne({ _email: newUser._email });
 
-      // Guarda el nuevo usuario en la base de datos
-      await user.save();
+    if (existingUser) {
+      // Si el correo electrónico ya existe, responde con un error
+      return res.status(400).json({ error: 'El correo electrónico ya está registrado' });
+    }
 
-      // Responde con el usuario recién creado
-      res.status(201).json(user);
+    // Crea una instancia del modelo User con los datos proporcionados
+    const user = new UserModel(newUser);
+
+    // Guarda el nuevo usuario en la base de datos
+    await user.save();
+
+    // Responde con el usuario recién creado
+    res.status(201).json(user);
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error al agregar un nuevo usuario' });
+    console.error(error);
+    res.status(500).json({ error: 'Error al agregar un nuevo usuario' });
   }
 });
 
