@@ -22,11 +22,11 @@
                 <h2>Sign In</h2>
             </div>
             <div class="form">
-                <form action="">
+                <form onsubmit="SignUp(event)">
                     <input type="text" name="username" id="username" placeholder="Username">
                     <input type="email" name="email" id="email" placeholder="Email or phone number">
                     <input type="password" name="password" id="password" placeholder="Password">
-                    <button class="sign-in">Sign Up</button>
+                    <button type="submit" class="sign-in">Sign Up</button>
                 </form>
             </div>
             <div class="options">
@@ -53,6 +53,10 @@
         </div>
     </footer>
 
+    <script src="../components/loader.js"></script>
+    <script src="../controllers/utils.js"></script>
+    <script src="../controllers/user_utils.js"></script>
+    <script src="../controllers/ajax_handler.js"></script>
     <script src="links.js"></script>
 </body>
 </html>
