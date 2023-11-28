@@ -117,22 +117,22 @@ async function loadUserInfo() {
 
 
 function onUser() {
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    const titleLower = document.title.toLowerCase();
+    // const user = JSON.parse(sessionStorage.getItem('user'));
+    // const titleLower = document.title.toLowerCase();
 
-    console.log(titleLower);
-    if (titleLower.includes("login")) {
-        console.log("You are on the login page");
-        if(user){
-            console.log("hay un usuario con sesión activa ", user)
-            window.open("/client/views/profiles.html","_self")
-        }
-    }else{
-        if(!user){
-            console.log("no hay un usuario con sesión activa ", user)
-            window.open("/client/views/","_self")
-        }
-    }
+    // console.log(titleLower);
+    // if (titleLower.includes("login")) {
+    //     console.log("You are on the login page");
+    //     if(user){
+    //         console.log("hay un usuario con sesión activa ", user)
+    //         window.open("/client/views/profiles.html","_self")
+    //     }
+    // }else{
+    //     if(!user){
+    //         console.log("no hay un usuario con sesión activa ", user)
+    //         window.open("/client/views/","_self")
+    //     }
+    // }
 }
 
 async function createProfile(event) {
@@ -247,6 +247,49 @@ async function deleteProfile(event) {
         console.log('Error al conectarse con el servidor.');
     }
 }
+
+
+async function SignUp(event) {
+    event.preventDefault();
+    const nombre = event.target.username.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    if (!nombre || !email || !password) {
+        alert('Nombre, email, and password are required.');
+        return;
+    }
+
+    try {
+        // Hacer una solicitud para agregar el nuevo usuario
+        const response = await fetch(apiURL + 'user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                _nombre: nombre,
+                _email: email,
+                _password: password,
+            }),
+        });
+
+        console.log(response);
+        
+        if (response.ok) {
+            const responseData = await response.json(); // espera la respuesta JSON
+            console.log(responseData)
+            sessionStorage.setItem('user',JSON.stringify(responseData))
+            alert('Usuario creado con éxito.');
+            window.location.href='home.html'
+            // Puedes realizar acciones adicionales aquí si es necesario
+        } else {
+            alert('Error al crear el usuario.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error de conexión con el servidor.');
+    }
+}   
 
 
 
