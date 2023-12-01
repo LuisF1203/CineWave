@@ -666,7 +666,8 @@ app.post('/api/login', async (req, res) => {
 
     } else {
       // Credenciales incorrectas
-      res.status(401).json({ error: 'Credenciales incorrectas' });
+      const ip = req.ip;
+      res.status(401).json({ error: 'Credenciales incorrectas: '+ip });
     }
   } catch (error) {
     console.error(error);
