@@ -1,7 +1,7 @@
 "use strict";
 
 //const apiURL = 'http://localhost:3000/api/';
-const apiURL='https://cinewave2.onrender.com/api'
+const apiURL='https://cinewave2.onrender.com/api/'
 const moviesURL = apiURL + 'movies/';
 const seriesURL = apiURL + 'series/';
 const usersURL = apiURL + 'user/';
