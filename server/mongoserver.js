@@ -2,6 +2,10 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path'); // Agregamos el módulo path
+
+
+
 //const dataHandler = require('./controllers/data_handler');
 const app = express();
 const port = 3000;
@@ -10,6 +14,15 @@ const port = 3000;
 app.use(cors());
 // Habilitar el uso de JSON en las solicitudes
 app.use(express.json());
+
+
+
+const staticPath = path.join(__dirname, './../client');
+app.use(express.static(staticPath));
+
+
+
+
 
 // URL de conexión a MongoDB
 const mongoUrl = 'mongodb+srv://admin:admin@cinewave.7lkndu5.mongodb.net/CineWave';
@@ -126,6 +139,10 @@ app.post('/api/user', async (req, res) => {
 });
 
 
+
+
+
+
 //**POSTEAR un perfil**//
 app.post('/api/users/:email/profiles', async (req, res) => {
   try {
@@ -181,6 +198,200 @@ app.get('/api/users/:email', async (req, res) => {
   }
 });
   
+
+
+
+
+
+
+app.post('/api/users/:email/:profile/mylist', async (req, res) => {
+  try {
+    const email = req.params.email;
+    const profileKey = req.params.profile;
+    const media = req.body;
+
+    // Buscar usuario por correo electrónico en la base de datos
+    const user = await UserModel.findOne({ _email: email });
+
+    if (!user) {
+      res.status(404).json({ error: 'Usuario no encontrado' });
+      return;
+    }
+
+    // Verificar si la clave del perfil existe en el Map
+    if (!user.profiles.has(profileKey)) {
+      res.status(404).json({ error: 'Perfil no encontrado' });
+      return;
+    }
+
+    // Acceder al perfil específico utilizando la clave
+    const profile = user.profiles.get(profileKey);
+
+    // Verificar si la película ya está en la lista (_myList)
+    const movieExists = profile._myList.some((movie) => movie.title === media.title);
+
+    if (movieExists) {
+      res.status(400).json({ error: 'La película ya está en la lista' });
+      return;
+    }
+
+    // Agregar la película a _myList
+    profile._myList.push(media);
+
+    // Guardar los cambios en la base de datos
+    await user.save();
+
+    res.status(201).json(profile);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Error al agregar un nuevo elemento a _mylist' });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.post('/api/users/:email/:profile/watching', async (req, res) => {
+  try {
+    const email = req.params.email;
+    const profileKey = req.params.profile;
+    const mediaList = req.body;
+
+    // Buscar usuario por correo electrónico en la base de datos
+    const user = await UserModel.findOne({ _email: email });
+
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    // Verificar si la clave del perfil existe en el Map
+    if (!user.profiles.has(profileKey)) {
+      return res.status(404).json({ error: 'Perfil no encontrado' });
+    }
+
+    // Acceder al perfil específico utilizando la clave
+    const profile = user.profiles.get(profileKey);
+
+    // Verificar si _watching ya tiene elementos
+
+    // Iterar sobre la lista de media y agregar cada elemento a _watching si no está presente
+    mediaList.forEach(media => {
+      // Verificar si la película ya está en _watching
+      const movieExists = profile._watching.some((item) => item.media._id === media.media._id);
+
+      // Si no está presente, agregarla
+      if (!movieExists) {
+        profile._watching.push(media);
+      }
+    });
+
+    // Guardar los cambios en la base de datos
+    await user.save();
+
+    res.status(201).json(profile);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al agregar nuevos elementos a _watching' });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //**PUT para actualizar datos del usuario por email**//
   app.put('/api/users/:email', async (req, res) => {
     try {
@@ -464,10 +675,9 @@ app.post('/api/login', async (req, res) => {
 });
 
 
-
-
-
-
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, './../client/views/index.html'));
+});
 
 // Iniciar el servidor
 app.listen(port, () => {

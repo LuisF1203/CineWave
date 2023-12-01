@@ -44,10 +44,10 @@ function writeMyList(media) {
 }
 
 
-function addToMyList(media) {
+async function addToMyList(media) {
     const myList = readMyList();
-
-    // Verificar si el título del nuevo elemento ya existe en la lista
+//
+    //// Verificar si el título del nuevo elemento ya existe en la lista
     let isDuplicate = false;
     for (const item of myList._mediaProxies) {
         if (item.title === media.title) {
@@ -55,12 +55,33 @@ function addToMyList(media) {
             break;
         }
     }
-
+//
     if (!isDuplicate) {
         myList._mediaProxies.push(media);
         writeMyList(myList);
     }
     renderMyList();
+
+
+    //console.log(JSON.parse(sessionStorage.getItem("user")))
+    //let userEmail=JSON.parse(sessionStorage.getItem("user"))._email;
+    //let profile=JSON.parse(localStorage.getItem("profile")).id;
+    //const response = await fetch(apiURL + 'users/' + `${userEmail}/` +  `${profile}/`+"mylist", {
+    //    method: 'POST',
+    //    headers: {
+    //        'Content-Type': 'application/json',
+    //    },
+    //    body: JSON.stringify(media),
+    //});
+//
+    //if (response.ok) {
+    //    // La solicitud fue exitosa (código de estado HTTP 2xx)
+    //    const responseData = await response.json();
+    //    console.log(responseData);
+    //} else {
+    //    // La solicitud no fue exitosa (código de estado HTTP diferente de 2xx)
+    //    console.error('Error en la solicitud:', response.status, response.statusText);
+    //}
 }
 
 function deleteFromMyList(media) {
@@ -99,7 +120,7 @@ function deleteFromWatching(media) {
 
 
 
-function saveProgressMedia(media, progress) {
+async function saveProgressMedia(media, progress) {
     // Get the current "Watching" array from localStorage
     let watchingArray = JSON.parse(localStorage.getItem("Watching")) || [];
 
@@ -116,6 +137,19 @@ function saveProgressMedia(media, progress) {
 
     // Save the updated array back to localStorage
     localStorage.setItem("Watching", JSON.stringify(watchingArray));
+
+    let userEmail=JSON.parse(sessionStorage.getItem("user"))._email;
+    let profile=JSON.parse(localStorage.getItem("profile")).id;
+
+
+    const response = await fetch(apiURL + 'users/' + `${userEmail}/` +  `${profile}/`+"watching", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(watchingArray),
+    });
+
 }
 
 

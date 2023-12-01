@@ -21,7 +21,7 @@ async function logIn(e) {
             const user = await response.json();
             sessionStorage.setItem("user", JSON.stringify(user));
             console.log("Login successful:", user);
-            window.location.href = "/client/views/profiles.html";
+            window.location.href = " views/profiles.html";
         } else if (response.status === 401) {
             alert("Credenciales incorrectas.");
         } else {
@@ -40,7 +40,7 @@ function logOut(){
     localStorage.removeItem('profile');
     localStorage.removeItem('Watching');
     sessionStorage.removeItem('profileInfo');
-    window.location.href = "/client/views/";
+    window.location.href = "/";
 }
 
 
@@ -55,7 +55,7 @@ const logProfile = (name,img) => {
     //initMyNewProfile(name,img,sessionStorage.getItem("profileInfo")[name])
     //
     initMyNewProfile(name,img,JSON.parse(sessionStorage.getItem("profileInfo"))[name])
-    window.open("/client/views/home.html","_self")
+    window.location.href = "/views/home.html";
 };
 
 
@@ -117,23 +117,24 @@ async function loadUserInfo() {
 
 
 function onUser() {
-    // const user = JSON.parse(sessionStorage.getItem('user'));
-    // const titleLower = document.title.toLowerCase();
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const titleLower = document.title.toLowerCase();
 
-    // console.log(titleLower);
-    // if (titleLower.includes("login")) {
-    //     console.log("You are on the login page");
-    //     if(user){
-    //         console.log("hay un usuario con sesión activa ", user)
-    //         window.open("/client/views/profiles.html","_self")
-    //     }
-    // }else{
-    //     if(!user){
-    //         console.log("no hay un usuario con sesión activa ", user)
-    //         window.open("/client/views/","_self")
-    //     }
-    // }
+    console.log(titleLower);
+    if (titleLower.includes("login") || titleLower.includes("register")) {
+        console.log("You are on the login or register page");
+        if (user) {
+            console.log("There is a user with an active session ", user);
+            window.open("/views/profiles.html", "_self");
+        }
+    } else {
+        if (!user) {
+            console.log("There is no user with an active session ", user);
+            window.open("/", "_self");
+        }
+    }
 }
+
 
 
 
@@ -243,7 +244,7 @@ async function createProfile(event) {
 
                     alert('Perfil creado con éxito.');
                     loadUserInfo().then(() => {
-                        window.location.href = "/client/views/profiles.html";
+                        window.location.href = "/views/profiles.html";
                     });
                 } else {
                     alert('Error al crear el perfil.');
@@ -325,7 +326,7 @@ async function deleteProfile(event) {
 
             localStorage.removeItem('profile');
             alert('Perfil borrado exitosamente.');
-            window.location.href = "/client/views/profiles.html";
+            window.location.href = "/views/profiles.html";
         } else {
             console.log('Error al eliminar el perfil.');
         }
